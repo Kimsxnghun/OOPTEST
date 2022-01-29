@@ -9,14 +9,13 @@ public class Unit {
 	protected int hp; // 현재 생명력
 	protected int maxHp; // 최대 생명력
 	protected boolean dead = false; // 생존 여부
-	protected int damage; // 유닛이 받는 데미지
 	
 	protected int mp; // 현재 마나
 	protected int maxMp; // 최대 마나
 	protected int mpUse; // 마나 사용량
 	
-	protected int power; // 공격력 
-	protected int attackSpeed; // 공격 속도
+	protected int damage; // 공격력 
+	protected float attackSpeed; // 공격 속도
 	protected int defense; // 방어력
 	protected float missRate; // 회피율 (%)
 	
@@ -42,7 +41,7 @@ public class Unit {
 	public void heal() {
 		mpUse = maxMp*(10/100); // 마나 사용량
 		
-		if (mp >= mpUse || mp == 0) { // 스킬 사용시 필요한 마나보다 적거나 0이되면 스킬을 사용할 수 없다.
+		if (mp >= mpUse) { // 스킬 사용시 필요한 마나보다 적거나 0이되면 스킬을 사용할 수 없다.
 			mp -= mpUse;
 			hp += maxHp*(10/100); // 전체 체력의 10% 회복	
 		}
@@ -58,8 +57,8 @@ public class Unit {
 	}
 	
 	// 기본 공격
-	public void attack(int power) {
-		this.power = power; // 최종 데미지는 받는 데미지에서 계산
+	public void attack(int damage) {
+		this.damage = damage; // 최종 데미지는 받는 데미지에서 계산
 	}
 	
 	
@@ -67,9 +66,9 @@ public class Unit {
 	public void steam() { 
 		mpUse -= maxMp*(5/100); // 마나 사용량
 		
-		if (mp >= mpUse || mp == 0) { // 스킬 사용시 필요한 마나보다 적거나 0이되면 스킬을 사용할 수 없다.
+		if (mp >= mpUse) { // 스킬 사용시 필요한 마나보다 적거나 0이되면 스킬을 사용할 수 없다.
 			mp -= mpUse;
-			power += power*(20/100); // 공격력 20% 상승
+			damage += damage*(20/100); // 공격력 20% 상승
 		}
 	}
 
@@ -120,7 +119,7 @@ public class Unit {
 	}
 
 
-	public void setDamage(int damage) {
+	public void setDamage(int damage) { // Attack이랑 같은데...
 		this.damage = damage;
 	}
 
@@ -154,23 +153,12 @@ public class Unit {
 		this.mpUse = mpUse;
 	}
 
-
-	public int getPower() {
-		return power;
-	}
-
-
-	public void setPower(int power) { // Attack이랑 같은데.. 흠..
-		this.power = power; 
-	}
-
-
-	public int getAttackSpeed() {
+	public float getAttackSpeed() {
 		return attackSpeed;
 	}
 
 
-	public void setAttackSpeed(int attackSpeed) {
+	public void setAttackSpeed(float attackSpeed) {
 		this.attackSpeed = attackSpeed;
 	}
 

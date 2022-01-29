@@ -1,26 +1,53 @@
 package Model;
 
+import ModelWeapon.Sword;
+
 public class Human extends Unit{
 	
 	public Human() {
-		Level = 1;
-		HP = 1000;
-		MP = 100;
-		Power = 100;
-		AttackSpeed = 1;
-		Defense = 10;
-		MissRate = 10/100;
+		
+		level=1; // 레벨
+		
+		hp = 200; // 현재 생명력
+		maxHp = 200; // 최대 생명력
+		dead = false; // 생존 여부
+		
+		mp = 200; // 현재 마나
+		maxMp = 200; // 최대 마나
+		mpUse = 0; // 마나 사용량
+		
+		damage = 20; // 공격력 
+		attackSpeed = 1; // 공격 속도
+		defense = 20; // 방어력
+		missRate = 0.1f; // 회피율 (%)
+		
+		weapon = new Sword();
 	}
 	
+	// 휴먼 스킬
 	public void Guard() {
-		MP -= 10;
-		Defense+=Defense*(30/100);
+		mpUse -= 10;
+		
+		if (mp >= mpUse) {
+			mp -= mpUse;
+			defense+=defense*(30/100); // 방어력 30% 상승		
+		}
+		
 	}
 	
+	// 궁극 스킬
 	public void Invincible() {
-		MP -= MP*(30/100);
-		Damage = 0;
-		System.out.println("무적!!");
+		if (this.level >= 99) { // level이 99가 넘으면 사용 가능
+			mpUse -= mp*(30/100);
+			
+			if (mp >= mpUse) {
+				mp -= mpUse;
+				
+				if(hp<=0) {
+					dead = false; // 무적
+				}	
+			}					
+		}
 	}
 	
 }
