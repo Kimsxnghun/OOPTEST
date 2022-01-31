@@ -1,12 +1,11 @@
-package Model;
-
-import ModelWeapon.Axe;
+package Entity;
 
 public class Orc extends Unit{
 	
 	public Orc() {
 		
 		level=1; // 레벨
+		unit = "Orc"; // 종족
 		
 		hp = 150; // 현재 생명력
 		maxHp = 150; // 최대 생명력
@@ -17,11 +16,13 @@ public class Orc extends Unit{
 		mpUse = 0; // 마나 사용량
 		
 		damage = 30; // 공격력 
+		applyDamage = 0; // 받는 데미지
 		attackSpeed = 0.7f; // 공격 속도
 		defense = 30; // 방어력
-		missRate = 0.05f; // 회피율 (%)
+		missRate = 5; // 회피율 (%)
+		
+		equipped = false; // 무기 장착 여부
 
-		weapon = new Axe();
 	}
 	
 	// 오크 스킬

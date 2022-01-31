@@ -1,10 +1,13 @@
-package Model;
+package Entity;
+
+import Item.Weapon;
 
 public class Monster extends Unit {
 	
 	public Monster() {
 		
 		level=1; // 레벨
+		unit = "Monster"; // 종족
 		
 		hp = 100; // 현재 생명력
 		maxHp = 100; // 최대 생명력
@@ -15,9 +18,10 @@ public class Monster extends Unit {
 		mpUse = 0; // 마나 사용량
 		
 		damage = 10; // 공격력 
+		applyDamage = 0; // 받는 데미지
 		attackSpeed = 0.5f; // 공격 속도
 		defense = 5; // 방어력
-		missRate = 0.05f; // 회피율 (%)
+		missRate = 5; // 회피율 (%)
 
 	}
 	
@@ -28,5 +32,17 @@ public class Monster extends Unit {
 			mp -= mpUse;
 			hp -= damage*(70/100);
 		}
+	}
+
+	@Override
+	public void equip(Weapon w) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unequip(Weapon w) {
+		// TODO Auto-generated method stub
+		
 	}
 }

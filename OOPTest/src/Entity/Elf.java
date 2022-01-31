@@ -1,12 +1,11 @@
-package Model;
-
-import ModelWeapon.Bow;
+package Entity;
 
 public class Elf extends Unit{
 	
 	public Elf() {
 		
 		level=1; // 레벨
+		unit = "Elf"; // 종족
 		
 		hp = 100; // 현재 생명력
 		maxHp = 100; // 최대 생명력
@@ -17,11 +16,13 @@ public class Elf extends Unit{
 		mpUse = 0; // 마나 사용량
 		
 		damage = 10; // 공격력 
+		applyDamage = 0; // 받는 데미지
 		attackSpeed = 2; // 공격 속도
 		defense = 10; // 방어력
-		missRate = 0.2f; // 회피율 (%)
+		missRate = 20; // 회피율 (%)
 		
-		weapon = new Bow();
+		equipped = false; // 무기 장착 여부
+		
 	}
 	
 	// 엘프 스킬

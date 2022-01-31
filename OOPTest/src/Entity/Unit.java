@@ -1,10 +1,13 @@
-package Model;
+package Entity;
 
-import ModelWeapon.Weapon;
+import java.util.Random;
+
+import Item.Weapon;
 
 public class Unit {
 	
 	protected int level; // 레벨
+	protected String unit; // 종족
 	
 	protected int hp; // 현재 생명력
 	protected int maxHp; // 최대 생명력
@@ -14,21 +17,27 @@ public class Unit {
 	protected int maxMp; // 최대 마나
 	protected int mpUse; // 마나 사용량
 	
-	protected int damage; // 공격력 
+	protected int damage; // 공격력
+	protected int applyDamage; // 받는 데미지
 	protected float attackSpeed; // 공격 속도
 	protected int defense; // 방어력
-	protected float missRate; // 회피율 (%)
+	protected int missRate; // 회피율 (%)
 	
-	protected Weapon weapon;
-
+	protected boolean equipped;// 무기 장착 여부
 	
 	// 데미지 받음
-	public void damageHp(int damage) { 
+	public void damageHp(int damage, Random ran) { 
 		
-		damage -= defense; // 받는 최종 데미지 = 대상 공격력 - 유닛 방어력
-		hp -= damage; // 현재 체력 -= 데미지
-		
-		damage = 0; // 피해 입은 후 데미지 초기화
+		if(ran.nextInt(100)>missRate) { // 피하지 못할 확률
+			
+			applyDamage = damage - defense; // 받는 최종 데미지 = 대상 공격력 - 유닛 방어력
+			hp -= applyDamage; // 현재 체력 -= 데미지
+			
+			applyDamage = 0; // 피해 입은 후 데미지 초기화
+			
+		} else { // 피할 확률
+			applyDamage = 0;
+		}
 		
 		if (hp <= 0) { // 생명력이 0이 되면 사망
 			hp = 0;
@@ -50,10 +59,22 @@ public class Unit {
 			hp = maxHp;
 		}
 	}
+
 	
-	 // 레벨 업
+	// 레벨 업
 	public void levelUp() {
-		level++;
+		level++; 
+		// 레벨이 1오르면 현재 능력치가 10% 상승
+		maxHp += maxHp*(10/100);
+		maxMp += maxMp*(10/100);
+		damage += damage*(10/100);
+		attackSpeed += attackSpeed*(10/100);
+		defense += defense*(10/100);
+		missRate += missRate*(10/100);
+		
+		// 현재 생명력과 마나가 최대치로 회복
+		hp = maxHp; 
+		mp = maxMp;
 	}
 	
 	// 기본 공격
@@ -72,8 +93,21 @@ public class Unit {
 		}
 	}
 
-	// getter, setter
+	// 무기 장착
+	public void equip(Weapon w) {
+		damage += w.dmg;
+		attackSpeed += w.asp;
+	};
+	// 무기 장착 해제
+	public void unequip(Weapon w) {
+		damage -= w.dmg;
+		attackSpeed -= w.asp;
+	};
 	
+	
+	
+	// getter, setter
+
 	public int getLevel() {
 		return level;
 	}
@@ -173,23 +207,15 @@ public class Unit {
 	}
 
 
-	public float getMissRate() {
+	public int getMissRate() {
 		return missRate;
 	}
 
 
-	public void setMissRate(float missRate) {
+	public void setMissRate(int missRate) {
 		this.missRate = missRate;
 	}
 
 
-	public Weapon getWeapon() {
-		return weapon;
-	}
-
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
 	
 }

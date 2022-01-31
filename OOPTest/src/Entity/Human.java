@@ -1,12 +1,10 @@
-package Model;
-
-import ModelWeapon.Sword;
+package Entity;
 
 public class Human extends Unit{
 	
 	public Human() {
-		
 		level=1; // 레벨
+		unit = "Human"; //종족 
 		
 		hp = 200; // 현재 생명력
 		maxHp = 200; // 최대 생명력
@@ -17,11 +15,13 @@ public class Human extends Unit{
 		mpUse = 0; // 마나 사용량
 		
 		damage = 20; // 공격력 
+		applyDamage = 0; // 받는 데미지
 		attackSpeed = 1; // 공격 속도
 		defense = 20; // 방어력
-		missRate = 0.1f; // 회피율 (%)
+		missRate = 10; // 회피율 (%)
 		
-		weapon = new Sword();
+		equipped = false; // 무기 장착 여부
+		
 	}
 	
 	// 휴먼 스킬
